@@ -3,4 +3,12 @@
 # CS 333
 # Final Project
 
-print("Hello World!")
+from display import Display
+
+def main():
+    applicationRunning = True
+    while(applicationRunning):
+        Display("logo")
+
+if __name__ == "__main__":
+    main()
