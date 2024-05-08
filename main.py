@@ -4,78 +4,13 @@
 # Final Project
 
 from display import Display
+from checkWin import CheckWin
+from getRandWord import GetRandWord
+from settings import Settings
+
 import numpy as np
-import random
 import sys
 
-def settings():
-    choice = input(":")
-
-    if(choice == 'a'):
-        return "easy"
-
-    if(choice == 'b'):
-        return "medium"
-
-    if(choice == 'c'):
-        return "hard"
-
-    if(choice == 'd'):
-        return "combo"
-
-    if(choice == 'e'):
-        return "custom"
-
-def read_file_line(file_path, line_number):
-    file = open(file_path, 'r') 
-  
-    # read the content of the file opened 
-    content = file.readlines()
-    return content[line_number]
-
-def getRandWord(difficulty):
-    lines = 1
-    wordLineNum = 0
-
-    if(difficulty == "easy"):
-        f = open("wordlists/easyList.txt")
-        lines = len(f.readlines())
-        f.close()
-       
-        wordLineNum = random.randint(0, lines)
-        return(read_file_line("wordlists/easyList.txt", wordLineNum))
-
-    if(difficulty == "medium"):
-        f = open("wordlists/mediumList.txt")
-        lines = len(f.readlines())
-        f.close()
-       
-        wordLineNum = random.randint(0, lines)
-        return(read_file_line("wordlists/mediumList.txt", wordLineNum))
-
-    if(difficulty == "hard"):
-        f = open("wordlists/hardList.txt")
-        lines = len(f.readlines())
-        f.close()
-       
-        wordLineNum = random.randint(0, lines)
-        return(read_file_line("wordlists/hardList.txt", wordLineNum))
-
-    if(difficulty == "combo"):
-        f = open("wordlists/comboList.txt")
-        lines = len(f.readlines())
-        f.close()
-       
-        wordLineNum = random.randint(0, lines)
-        return(read_file_line("wordlists/comboList.txt", wordLineNum))
-
-    if(difficulty == "custom"):
-        f = open("wordlists/customList.txt")
-        lines = len(f.readlines())
-        f.close()
-       
-        wordLineNum = random.randint(0, lines)
-        return(read_file_line("wordlists/customList.txt", wordLineNum))
 
 def playGame(difficulty):
     global errors
@@ -84,7 +19,7 @@ def playGame(difficulty):
     errors = 0
     corrects = 0
 
-    word = getRandWord(difficulty)
+    word = GetRandWord(difficulty)
     word = word[:-1]
     
     truthArray = np.array([False]*len(word))
@@ -137,22 +72,12 @@ def playGame(difficulty):
             else:
                 repeatLetter = False
             wrongInt += 1
+
         if(corrects >= len(word)):
             winGame = True
 
-    if(winGame):
-        Display(errors)
-        print("\n")
-        print("You Win!")
-        corrects = 0
-        words = 0
-    else:
-        Display(errors)
-        print("\n")
-        print("You Lose!")
-        print("The word was: " + word)
-        corrects = 0
-        errors = 0
+        win = CheckWin(winGame, word, errors)
+        
 
 def main():
     applicationRunning = True
@@ -172,7 +97,8 @@ def main():
         elif(choice == 'b'):
             print("\n\n")
             Display("settings")
-            difficulty = settings()
+            choice = input(":")
+            difficulty = Settings(choice)
             
         elif(choice == 'c'):
             print("\n\n")
