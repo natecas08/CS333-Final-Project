@@ -126,3 +126,4 @@ def Display(type):
         print(" |        |")
         print("/ \\       |")
         print("      ____|__")
+        print(" YOU LOSE!")
