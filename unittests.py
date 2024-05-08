@@ -43,7 +43,7 @@ class TestSettings(unittest.TestCase):
         self.assertEqual(Settings('d'), "combo")
 
     def test_custom_return(self):
-        self.assertEqual(Settings('e'), "custom")
+        self.assertEqual(Settings('e'), "wrong")
 
 if __name__ == '__main__':
     unittest.main()
